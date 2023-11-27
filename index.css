@@ -557,10 +557,10 @@
   line-height: 1.6;
 }
 .home-text28 {
-  color: #00ff9a;
+  color: rgb(0, 102, 255);
 }
 .home-banner-button {
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   transition: 0.3s;
   font-weight: 700;
   padding-top: 1.5rem;
@@ -569,11 +569,12 @@
   border-radius: 45px;
   padding-right: 3rem;
   padding-bottom: 1.5rem;
-  background-color: rgb(0, 255, 154);
+  background-color: rgb(0, 102, 255);
 }
 .home-banner-button:hover {
   border-color: rgba(41, 20, 119, 0.9);
   background-color: rgba(41, 20, 119, 0.9);
+  color: rgb(255, 255, 255);
 }
 .home-footer {
   flex: 0 0 auto;
