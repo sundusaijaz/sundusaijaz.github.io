@@ -253,24 +253,6 @@
     .edu-thesis-title { font-size: 13px; color: var(--text); font-style: italic; }
     .edu-thesis-desc { font-size: 12px; color: var(--text-3); margin-top: 6px; line-height: 1.6; }
 
-    /* CERTIFICATIONS */
-    .certs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .cert-card {
-      background: var(--bg-2); border: 0.5px solid var(--border); border-radius: 10px;
-      padding: 16px 18px; display: flex; align-items: flex-start; gap: 12px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .cert-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
-    .cert-icon {
-      width: 36px; height: 36px; border-radius: 8px; background: var(--purple-dim);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--purple); font-size: 16px; flex-shrink: 0;
-      transition: background 0.2s;
-    }
-    .cert-card:hover .cert-icon { background: rgba(139,92,246,0.22); }
-    .cert-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
-    .cert-issuer { font-size: 12px; color: var(--text-3); }
-    .cert-date { font-size: 11px; color: var(--teal); margin-top: 3px; }
 
     /* CONTACT */
     .contact-wrap {
@@ -302,12 +284,52 @@
     /* FOOTER */
     footer { text-align: center; padding: 32px 48px; font-size: 12px; color: var(--text-3); border-top: 0.5px solid var(--border); }
 
-    /* PROGRESS BARS in skills */
-    .skill-bar-wrap { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
-    .skill-bar-item {}
-    .skill-bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-2); margin-bottom: 5px; }
-    .skill-bar-track { height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden; }
-    .skill-bar-fill { height: 100%; background: var(--purple); border-radius: 2px; width: 0; transition: width 1.2s cubic-bezier(0.22,1,0.36,1); }
+    /* CERTIFICATIONS CARD STYLE */
+    .certs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .cert-card {
+      background: var(--bg-2); border: 0.5px solid var(--border); border-radius: 14px;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0 0 20px; overflow: hidden; text-align: center;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+    .cert-card:hover { border-color: rgba(139,92,246,0.45); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
+    .cert-top-bar { width: 100%; height: 3px; background: linear-gradient(90deg, var(--purple), var(--teal)); }
+    .cert-logo-wrap {
+      width: 72px; height: 72px; border-radius: 16px; margin: 22px auto 14px;
+      background: var(--bg-3); border: 0.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: var(--purple);
+      transition: transform 0.2s;
+    }
+    .cert-card:hover .cert-logo-wrap { transform: scale(1.06); }
+    .cert-name { font-size: 14px; font-weight: 500; color: var(--text); padding: 0 16px; margin-bottom: 5px; line-height: 1.4; }
+    .cert-issuer { font-size: 12px; color: var(--purple); margin-bottom: 14px; }
+    .cert-meta { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .cert-meta-row { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; color: var(--text-3); }
+    .cert-meta-row i { font-size: 12px; }
+    .cert-meta-row.green { color: var(--teal); }
+    .cert-id-box {
+      background: var(--bg-3); border: 0.5px solid var(--border); border-radius: 6px;
+      padding: 8px 14px; margin: 0 16px 14px; width: calc(100% - 32px);
+      font-size: 11px; color: var(--text-2); text-align: left; font-family: monospace;
+    }
+    .cert-id-box strong { color: var(--text); }
+    .cert-skills { padding: 0 14px; margin-bottom: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+    .cert-skill-pill {
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      background: var(--teal-dim); color: var(--teal);
+      border: 0.5px solid rgba(20,184,166,0.25);
+    }
+    .cert-verify-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 500; padding: 9px 20px; border-radius: 8px;
+      background: var(--purple); color: #fff;
+      transition: opacity 0.2s, transform 0.15s; margin-top: auto;
+    }
+    .cert-card:hover .cert-verify-btn { opacity: 0.88; }
+    @media (max-width: 900px) { .certs-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .certs-grid { grid-template-columns: 1fr; } }
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
@@ -501,20 +523,6 @@
         <span class="pill">Computer Vision</span><span class="pill">Time-series</span>
         <span class="pill">Feature Engineering</span><span class="pill">Uncertainty Quantification</span>
       </div>
-      <div class="skill-bar-wrap">
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>PyTorch / TensorFlow</span><span>90%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Computer Vision</span><span>85%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Time-series Forecasting</span><span>80%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
-        </div>
-      </div>
     </div>
     <div class="skill-group reveal reveal-delay-2">
       <div class="skill-group-title">LLMs / NLP</div>
@@ -523,16 +531,6 @@
         <span class="pill">Hugging Face</span><span class="pill">Prompt Engineering</span>
         <span class="pill">NLP</span><span class="pill">Text Summarisation</span><span class="pill">Agentic Workflows</span>
         <span class="pill">Generative AI</span><span class="pill">RAG</span>
-      </div>
-      <div class="skill-bar-wrap">
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>LLM APIs &amp; LangChain</span><span>82%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Prompt Engineering</span><span>88%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
-        </div>
       </div>
     </div>
     <div class="skill-group reveal reveal-delay-3">
@@ -689,42 +687,107 @@
   <div class="section-tag reveal">Credentials</div>
   <div class="section-title reveal reveal-delay-1">Certifications</div>
   <div class="certs-grid">
-    <a class="cert-card reveal reveal-delay-1" href="https://coursera.org/verify/CU75G8RW4TRX" target="_blank">
-      <div class="cert-icon"><i class="fas fa-robot"></i></div>
-      <div>
-        <div class="cert-title">Generative AI with Large Language Models</div>
-        <div class="cert-issuer">DeepLearning.AI &amp; AWS &middot; Coursera</div>
-        <div class="cert-date">Dec 2024</div>
+
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-top-bar"></div>
+      <div class="cert-logo-wrap"><i class="fas fa-robot"></i></div>
+      <div class="cert-name">Generative AI with Large Language Models</div>
+      <div class="cert-issuer">DeepLearning.AI &amp; AWS</div>
+      <div class="cert-meta">
+        <div class="cert-meta-row"><i class="fas fa-calendar-alt"></i> Issued: Dec 2024</div>
+        <div class="cert-meta-row green"><i class="fas fa-check-circle"></i> No expiration</div>
       </div>
-    </a>
-    <a class="cert-card reveal reveal-delay-2" href="https://coursera.org/share/677438ed8472ac0e158789b7e555472e" target="_blank">
-      <div class="cert-icon"><i class="fas fa-network-wired"></i></div>
-      <div>
-        <div class="cert-title">TensorFlow Developer</div>
-        <div class="cert-issuer">DeepLearning.AI &middot; Coursera</div>
+      <div class="cert-id-box"><strong>Credential ID:</strong> CU75G8RW4TRX</div>
+      <div class="cert-skills">
+        <span class="cert-skill-pill">Generative AI</span>
+        <span class="cert-skill-pill">LLMs</span>
+        <span class="cert-skill-pill">Fine-tuning</span>
+        <span class="cert-skill-pill">RLHF</span>
       </div>
-    </a>
-    <a class="cert-card reveal reveal-delay-3" href="https://raw.githubusercontent.com/sundusaijaz/MyCertificates/main/piaic_certificate.jpeg" target="_blank">
-      <div class="cert-icon"><i class="fas fa-brain"></i></div>
-      <div>
-        <div class="cert-title">PIAIC Artificial Intelligence</div>
-        <div class="cert-issuer">Presidential Initiative for AI &amp; Computing</div>
+      <a class="cert-verify-btn" href="https://coursera.org/verify/CU75G8RW4TRX" target="_blank">
+        <i class="fas fa-external-link-alt"></i> Verify Credential
+      </a>
+    </div>
+
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-top-bar"></div>
+      <div class="cert-logo-wrap"><i class="fas fa-network-wired"></i></div>
+      <div class="cert-name">TensorFlow Developer Professional Certificate</div>
+      <div class="cert-issuer">DeepLearning.AI</div>
+      <div class="cert-meta">
+        <div class="cert-meta-row"><i class="fas fa-calendar-alt"></i> Issued: Jul 2023</div>
+        <div class="cert-meta-row green"><i class="fas fa-check-circle"></i> No expiration</div>
       </div>
-    </a>
-    <a class="cert-card reveal reveal-delay-4" href="https://raw.githubusercontent.com/sundusaijaz/MyCertificates/main/MachineLeraning_PySpark.jpeg" target="_blank">
-      <div class="cert-icon"><i class="fas fa-database"></i></div>
-      <div>
-        <div class="cert-title">Machine Learning with PySpark</div>
-        <div class="cert-issuer">DataCamp</div>
+      <div class="cert-id-box"><strong>Credential ID:</strong> 677438ed8472ac0e</div>
+      <div class="cert-skills">
+        <span class="cert-skill-pill">Deep Learning</span>
+        <span class="cert-skill-pill">CNNs</span>
+        <span class="cert-skill-pill">NLP</span>
+        <span class="cert-skill-pill">TensorFlow</span>
       </div>
-    </a>
-    <a class="cert-card reveal reveal-delay-1" href="https://www.credly.com/badges/2a77965e-7395-4b89-95da-602d320e3d21" target="_blank">
-      <div class="cert-icon"><i class="fab fa-microsoft"></i></div>
-      <div>
-        <div class="cert-title">Python Programming Introduction</div>
-        <div class="cert-issuer">Microsoft</div>
+      <a class="cert-verify-btn" href="https://coursera.org/share/677438ed8472ac0e158789b7e555472e" target="_blank">
+        <i class="fas fa-external-link-alt"></i> Verify Credential
+      </a>
+    </div>
+
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-top-bar"></div>
+      <div class="cert-logo-wrap"><i class="fas fa-brain"></i></div>
+      <div class="cert-name">PIAIC Artificial Intelligence</div>
+      <div class="cert-issuer">Presidential Initiative for AI &amp; Computing</div>
+      <div class="cert-meta">
+        <div class="cert-meta-row green"><i class="fas fa-check-circle"></i> No expiration</div>
       </div>
-    </a>
+      <div class="cert-skills">
+        <span class="cert-skill-pill">Machine Learning</span>
+        <span class="cert-skill-pill">Python</span>
+        <span class="cert-skill-pill">AI</span>
+        <span class="cert-skill-pill">Deep Learning</span>
+      </div>
+      <a class="cert-verify-btn" href="https://raw.githubusercontent.com/sundusaijaz/MyCertificates/main/piaic_certificate.jpeg" target="_blank">
+        <i class="fas fa-external-link-alt"></i> Verify Credential
+      </a>
+    </div>
+
+    <div class="cert-card reveal reveal-delay-4">
+      <div class="cert-top-bar"></div>
+      <div class="cert-logo-wrap"><i class="fas fa-database"></i></div>
+      <div class="cert-name">Machine Learning with PySpark</div>
+      <div class="cert-issuer">DataCamp</div>
+      <div class="cert-meta">
+        <div class="cert-meta-row green"><i class="fas fa-check-circle"></i> No expiration</div>
+      </div>
+      <div class="cert-skills">
+        <span class="cert-skill-pill">PySpark</span>
+        <span class="cert-skill-pill">Spark MLlib</span>
+        <span class="cert-skill-pill">Big Data</span>
+        <span class="cert-skill-pill">ML</span>
+      </div>
+      <a class="cert-verify-btn" href="https://raw.githubusercontent.com/sundusaijaz/MyCertificates/main/MachineLeraning_PySpark.jpeg" target="_blank">
+        <i class="fas fa-external-link-alt"></i> Verify Credential
+      </a>
+    </div>
+
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-top-bar"></div>
+      <div class="cert-logo-wrap"><i class="fab fa-microsoft"></i></div>
+      <div class="cert-name">Python Programming Introduction</div>
+      <div class="cert-issuer">Microsoft</div>
+      <div class="cert-meta">
+        <div class="cert-meta-row"><i class="fas fa-calendar-alt"></i> Issued: Apr 2024</div>
+        <div class="cert-meta-row green"><i class="fas fa-check-circle"></i> No expiration</div>
+      </div>
+      <div class="cert-id-box"><strong>Credential ID:</strong> 5GKSBZWSQS4M</div>
+      <div class="cert-skills">
+        <span class="cert-skill-pill">Python</span>
+        <span class="cert-skill-pill">Programming</span>
+        <span class="cert-skill-pill">SQL</span>
+      </div>
+      <a class="cert-verify-btn" href="https://www.credly.com/badges/2a77965e-7395-4b89-95da-602d320e3d21" target="_blank">
+        <i class="fas fa-external-link-alt"></i> Verify Credential
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -800,17 +863,6 @@
   }, { threshold: 0.5 });
   counters.forEach(c => counterObs.observe(c));
 
-  // SKILL BAR ANIMATIONS
-  const bars = document.querySelectorAll('.skill-bar-fill');
-  const barObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.width = e.target.dataset.width + '%';
-        barObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  bars.forEach(b => barObs.observe(b));
 </script>
 
 </body>
