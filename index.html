@@ -236,6 +236,37 @@
     }
     .project-card:hover .project-link { gap: 9px; }
 
+    /* PROJECT MODAL */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(4,4,8,0.7); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--bg-2); border: 0.5px solid var(--border); border-radius: 16px;
+      max-width: 560px; width: 100%; max-height: 80vh; overflow-y: auto;
+      padding: 32px 32px 28px; position: relative;
+      animation: modalIn 0.25s ease both;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .modal-close {
+      position: absolute; top: 18px; right: 18px;
+      width: 32px; height: 32px; border-radius: 8px; border: 0.5px solid var(--border);
+      background: var(--bg-3); color: var(--text-2); font-size: 14px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: color 0.2s, border-color 0.2s;
+    }
+    .modal-close:hover { color: var(--text); border-color: var(--border-hover); }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; padding-right: 36px; }
+    .modal-title { font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 14px; padding-right: 36px; }
+    .modal-body-text { font-size: 14px; color: var(--text-2); line-height: 1.8; margin-bottom: 20px; }
+    .modal-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: 8px;
+      background: var(--purple); color: #fff; transition: opacity 0.2s;
+    }
+    .modal-link:hover { opacity: 0.88; }
+
     /* EDUCATION */
     .edu-grid { display: flex; flex-direction: column; gap: 16px; }
     .edu-card {
@@ -560,35 +591,37 @@
   <div class="section-title reveal reveal-delay-1">Projects</div>
   <div class="projects-grid">
 
-    <div class="project-card reveal reveal-delay-1">
+    <div class="project-card reveal reveal-delay-1" onclick="openProjectModal('sales-forecasting')">
       <div class="project-img-placeholder"><i class="fas fa-chart-line"></i></div>
       <div class="project-body">
         <div class="project-tags"><span class="project-tag">Time-series</span><span class="project-tag teal">ARIMA &middot; LSTM</span><span class="project-tag amber">AWS</span></div>
         <div class="project-title">Automated Sales Forecasting System</div>
         <div class="project-desc">Built an end-to-end forecasting pipeline combining ARIMA for trend decomposition with an LSTM for sequential pattern capture, surfacing predictions through AWS QuickSight dashboards to support executive sales decisions.</div>
+        <span class="project-link">View Details <i class="fas fa-arrow-right"></i></span>
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-2">
+    <div class="project-card reveal reveal-delay-2" onclick="openProjectModal('footfall-forecasting')">
       <div class="project-img-placeholder"><i class="fas fa-store"></i></div>
       <div class="project-body">
         <div class="project-tags"><span class="project-tag">Forecasting</span><span class="project-tag teal">XGBoost</span><span class="project-tag amber">Streamlit</span></div>
         <div class="project-title">Restaurant Footfall Forecasting</div>
         <div class="project-desc">Designed a demand prediction system benchmarking ARIMA against XGBoost on real restaurant datasets &mdash; XGBoost reduced mean absolute error by ~15%. Delivered as a Streamlit app for weekly staffing and inventory planning.</div>
+        <span class="project-link">View Details <i class="fas fa-arrow-right"></i></span>
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-3">
+    <div class="project-card reveal reveal-delay-3" onclick="openProjectModal('llm-suite')">
       <div class="project-img-placeholder"><i class="fas fa-robot"></i></div>
       <div class="project-body">
         <div class="project-tags"><span class="project-tag">LLM</span><span class="project-tag teal">LangChain</span><span class="project-tag amber">OpenAI</span></div>
         <div class="project-title">LLM Engineering Suite</div>
         <div class="project-desc">Built five production-ready LLM apps &mdash; a meeting minutes generator, synthetic data pipeline, AI sales brochure writer, cafe assistant chatbot, and text summariser &mdash; using LangChain, OpenAI API, and Gradio across 18+ documented notebooks.</div>
-        <a class="project-link" href="https://github.com/sundusaijaz/LLM_Engineering" target="_blank">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        <span class="project-link">View Details <i class="fas fa-arrow-right"></i></span>
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-4">
+    <div class="project-card reveal reveal-delay-4" onclick="openProjectModal('face-tracking')">
       <div class="project-img-wrap">
         <img src="images/project-5.png" alt="Face detection and tracking" class="project-img" />
       </div>
@@ -596,11 +629,11 @@
         <div class="project-tags"><span class="project-tag">Computer Vision</span><span class="project-tag teal">MTCNN &middot; OCSORT</span></div>
         <div class="project-title">Face Detection &amp; Tracking Pipeline</div>
         <div class="project-desc">Engineered a real-time multi-face pipeline combining MTCNN for sub-pixel-accurate face localisation with OCSORT for persistent identity tracking across video frames, targeting automated attendance and surveillance use cases.</div>
-        <a class="project-link" href="https://github.com/sundusaijaz/Face-Recognition-and-Tracking" target="_blank">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        <span class="project-link">View Details <i class="fas fa-arrow-right"></i></span>
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-1">
+    <div class="project-card reveal reveal-delay-1" onclick="openProjectModal('cow-emotion')">
       <div class="project-img-wrap">
         <img src="images/project-3.jpg" alt="Cow emotion and posture analysis" class="project-img" />
       </div>
@@ -608,11 +641,11 @@
         <div class="project-tags"><span class="project-tag">Computer Vision</span><span class="project-tag teal">DeepLabCut &middot; RNN</span></div>
         <div class="project-title">Cow Emotion &amp; Posture Analysis</div>
         <div class="project-desc">Built a two-stage deep learning pipeline that extracts 16 anatomical keypoints from cow images using DeepLabCut (ResNet backbone), then classifies happy vs. unhappy emotional states via an RNN &mdash; enabling automated livestock welfare monitoring at scale.</div>
-        <a class="project-link" href="https://github.com/sundusaijaz/Cow-Emotions-and-Posture-Analysis-" target="_blank">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        <span class="project-link">View Details <i class="fas fa-arrow-right"></i></span>
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-2">
+    <div class="project-card reveal reveal-delay-2" onclick="openProjectModal('traffic-analysis')">
       <div class="project-img-wrap">
         <img src="images/project-1.jpeg" alt="Traffic analysis" class="project-img" />
       </div>
@@ -620,11 +653,11 @@
         <div class="project-tags"><span class="project-tag">Computer Vision</span><span class="project-tag amber">Smart City</span></div>
         <div class="project-title">Real-time Traffic Analysis System</div>
         <div class="project-desc">Developed a vehicle detection and flow analysis system using deep learning on live traffic footage, extracting lane-level density metrics and classification statistics to support smart city traffic engineering and signal optimisation decisions.</div>
-        <a class="project-link" href="https://drive.google.com/file/d/1rAh7DSaO4_SmIscLrBudMccfN0wcis6j/view?usp=sharing" target="_blank">View Demo <i class="fas fa-arrow-right"></i></a>
+        <span class="project-link">View Details <i class="fas fa-arrow-right"></i></span>
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-3">
+    <div class="project-card reveal reveal-delay-3" onclick="openProjectModal('osteoporosis')">
       <div class="project-img-wrap">
         <img src="images/knee.jpg" alt="Osteoporosis detection" class="project-img" />
       </div>
@@ -632,11 +665,11 @@
         <div class="project-tags"><span class="project-tag">Medical AI</span><span class="project-tag teal">CNN</span></div>
         <div class="project-title">Osteoporosis Detection from X-rays</div>
         <div class="project-desc">Trained a CNN to identify early-stage osteoporosis by learning bone density patterns directly from knee X-ray images, enabling automated screening that assists radiologists and reduces diagnostic turnaround time.</div>
-        <a class="project-link" href="https://github.com/sundusaijaz/Osteoporosis-Detection" target="_blank">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        <span class="project-link">View Details <i class="fas fa-arrow-right"></i></span>
       </div>
     </div>
 
-    <div class="project-card reveal reveal-delay-4">
+    <div class="project-card reveal reveal-delay-4" onclick="openProjectModal('spyeye')">
       <div class="project-img-wrap">
         <img src="images/spyeye.jpeg" alt="Surveillance system" class="project-img" />
       </div>
@@ -644,12 +677,25 @@
         <div class="project-tags"><span class="project-tag">Computer Vision</span><span class="project-tag amber">YOLOv3 &middot; dlib</span></div>
         <div class="project-title">Spyeye: Intelligent Surveillance System</div>
         <div class="project-desc">Built a multi-modal security system using YOLOv3 for real-time weapon detection (knives, guns) and fight recognition in CCTV footage, combined with dlib-based face recognition &mdash; delivering a complete automated threat-alert solution for homes and businesses.</div>
-        <a class="project-link" href="https://github.com/sundusaijaz/Final-Year-Project" target="_blank">View on GitHub <i class="fas fa-arrow-right"></i></a>
+        <span class="project-link">View Details <i class="fas fa-arrow-right"></i></span>
       </div>
     </div>
 
   </div>
 </section>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="projectModalOverlay" onclick="if(event.target===this) closeProjectModal()">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Close" onclick="closeProjectModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-tags" id="modalTags"></div>
+    <h3 class="modal-title" id="modalTitle"></h3>
+    <p class="modal-body-text" id="modalBody"></p>
+    <a class="modal-link" id="modalLink" target="_blank" style="display:none">
+      <i class="fas fa-arrow-up-right-from-square"></i> <span id="modalLinkLabel"></span>
+    </a>
+  </div>
+</div>
 
 <!-- EDUCATION -->
 <section id="education" style="padding-top:0">
@@ -837,6 +883,81 @@
     setTimeout(type, deleting ? 55 : 95);
   }
   setTimeout(type, 800);
+
+  // PROJECT MODAL DATA
+  const projectData = {
+    'sales-forecasting': {
+      title: 'Automated Sales Forecasting System',
+      tags: [['Time-series',''], ['ARIMA · LSTM','teal'], ['AWS','amber']],
+      body: "Designed and built a time-series forecasting system to predict retail sales trends ahead of demand planning cycles. The pipeline first applied ARIMA to decompose seasonal and trend components from historical sales data, then used an LSTM network to capture longer sequential dependencies that ARIMA alone could not model. Both models were benchmarked against each other on rolling validation windows to select the best-performing approach per product category. Forecasts were exposed through interactive AWS QuickSight dashboards, allowing non-technical stakeholders to drill into category-level and regional predictions without querying the underlying models directly. The system was built to retrain on a recurring schedule as new sales data arrived, keeping forecasts current without manual intervention."
+    },
+    'footfall-forecasting': {
+      title: 'Restaurant Footfall Forecasting',
+      tags: [['Forecasting',''], ['XGBoost','teal'], ['Streamlit','amber']],
+      body: "Built a customer footfall forecasting system for restaurant operations, comparing a classical statistical baseline (ARIMA) against a gradient-boosted tree model (XGBoost) on public restaurant visit datasets. Feature engineering included day-of-week, holiday flags, weather-adjusted features, and lagged visit counts to capture both cyclical and event-driven demand spikes. XGBoost outperformed ARIMA by roughly 15% on mean absolute error, largely because it could exploit non-linear interactions between calendar features that ARIMA's linear structure missed. The final model was wrapped in a Streamlit dashboard so restaurant managers could view weekly demand forecasts and adjust staffing and inventory orders accordingly, without needing a data science background."
+    },
+    'llm-suite': {
+      title: 'LLM Engineering Suite',
+      tags: [['LLM',''], ['LangChain','teal'], ['OpenAI','amber']],
+      body: "A collection of five practical LLM-powered applications built to explore the full spectrum of generative AI engineering, from prompt design to agentic workflows and deployment. MinutesOfMeeting transcribes and summarises meeting recordings into structured action items. SyntheticDataGenerator uses LLMs to create labelled training data for downstream ML tasks where real data is scarce. SalesBrochure auto-generates marketing copy from company websites by scraping and summarising content with prompt chaining. CafeAssistant is a conversational agent that handles orders and FAQs using LangChain tool-calling. TextSummarization condenses long documents into concise summaries using extractive and abstractive techniques. Each app was built and documented as a standalone Jupyter notebook with a Gradio interface for interactive demos, sharing a common pattern of combining the OpenAI API with LangChain for structured, multi-step workflows.",
+      link: 'https://github.com/sundusaijaz/LLM_Engineering', linkLabel: 'View on GitHub'
+    },
+    'face-tracking': {
+      title: 'Face Detection & Tracking Pipeline',
+      tags: [['Computer Vision',''], ['MTCNN · OCSORT','teal']],
+      body: "Built a real-time face detection and tracking system designed for industrial use cases like automated attendance and surveillance. MTCNN was used for the detection stage because of its strong performance on small and angled faces compared to simpler Haar cascade or single-shot detectors. Detected faces were then passed to an OCSORT tracker, which maintains consistent identity assignments across video frames even through brief occlusions or motion blur, avoiding the identity-switching problems common in naive frame-by-frame detection. The pipeline was optimised to run at near real-time frame rates on commodity hardware, making it deployable on standard CCTV or webcam feeds without specialised inference hardware.",
+      link: 'https://github.com/sundusaijaz/Face-Recognition-and-Tracking', linkLabel: 'View on GitHub'
+    },
+    'cow-emotion': {
+      title: 'Cow Emotion & Posture Analysis',
+      tags: [['Computer Vision',''], ['DeepLabCut · RNN','teal']],
+      body: "Developed a two-stage computer vision system to automatically assess cattle wellbeing from images, motivated by the difficulty of manually monitoring large herds for signs of distress. The first stage used DeepLabCut, a pose-estimation library built on a ResNet backbone, to locate 16 anatomically meaningful keypoints on each cow (ears, legs, spine, tail position). These coordinate sequences were then fed into a recurrent neural network trained to classify the animal's emotional state as happy or unhappy based on posture patterns learned from labelled examples. The project demonstrated how pose-estimation techniques originally built for human movement analysis can be adapted to livestock welfare monitoring, with a clear path to scaling from static images to continuous video analysis on farms.",
+      link: 'https://github.com/sundusaijaz/Cow-Emotions-and-Posture-Analysis-', linkLabel: 'View on GitHub'
+    },
+    'traffic-analysis': {
+      title: 'Real-time Traffic Analysis System',
+      tags: [['Computer Vision',''], ['Smart City','amber']],
+      body: "Built a computer vision system for analysing live traffic camera footage to support smart city infrastructure planning. The pipeline detects and classifies vehicles by type (car, bus, truck, motorcycle) frame by frame, then aggregates detections into lane-level density and flow-rate metrics over time. These metrics were designed to feed directly into traffic engineering decisions such as identifying congestion hotspots, evaluating signal timing changes, and justifying lane reallocation proposals with quantitative evidence rather than manual observation. The system was tested on real intersection footage and demonstrated as a proof-of-concept for municipal traffic monitoring.",
+      link: 'https://drive.google.com/file/d/1rAh7DSaO4_SmIscLrBudMccfN0wcis6j/view?usp=sharing', linkLabel: 'View Demo'
+    },
+    'osteoporosis': {
+      title: 'Osteoporosis Detection from X-rays',
+      tags: [['Medical AI',''], ['CNN','teal']],
+      body: "Built a convolutional neural network to screen for early-stage osteoporosis directly from knee X-ray images, aiming to support radiologists with a fast, automated pre-screening layer ahead of formal diagnosis. The CNN was trained on labelled X-ray datasets to recognise subtle bone density and texture patterns associated with bone loss that can be difficult to catch consistently with the naked eye, especially in high-volume clinical settings. The model outputs a classification alongside a confidence score, intended to help prioritise cases for radiologist review rather than replace clinical judgment. The project highlighted the potential for lightweight CNN-based screening tools to reduce diagnostic turnaround time in resource-constrained healthcare settings.",
+      link: 'https://github.com/sundusaijaz/Osteoporosis-Detection', linkLabel: 'View on GitHub'
+    },
+    'spyeye': {
+      title: 'Spyeye: Intelligent Surveillance System',
+      tags: [['Computer Vision',''], ['YOLOv3 · dlib','amber']],
+      body: "Final year capstone project building a complete automated security surveillance system that combines three independent detection capabilities into one pipeline. YOLOv3 was trained and used in two separate roles: weapon detection (identifying knives and guns in frame) and activity recognition (detecting physical altercations and fights from motion and pose cues). In parallel, a dlib-based face recognition module identified known individuals against an enrolled database, distinguishing residents and staff from unrecognised visitors. All three detection streams ran against live video feeds and were designed to trigger real-time alerts when a weapon, fight, or unrecognised intruder was detected, giving home and business owners an automated first line of threat detection without constant human monitoring of camera feeds.",
+      link: 'https://github.com/sundusaijaz/Final-Year-Project', linkLabel: 'View on GitHub'
+    }
+  };
+
+  function openProjectModal(id) {
+    const p = projectData[id];
+    if (!p) return;
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalBody').textContent = p.body;
+    document.getElementById('modalTags').innerHTML = p.tags.map(([label, cls]) =>
+      `<span class="project-tag ${cls}">${label}</span>`
+    ).join('');
+    const linkEl = document.getElementById('modalLink');
+    if (p.link) {
+      linkEl.href = p.link;
+      document.getElementById('modalLinkLabel').textContent = p.linkLabel || 'View Project';
+      linkEl.style.display = 'inline-flex';
+    } else {
+      linkEl.style.display = 'none';
+    }
+    document.getElementById('projectModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeProjectModal() {
+    document.getElementById('projectModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeProjectModal(); });
 
   // SCROLL REVEAL
   const revealEls = document.querySelectorAll('.reveal');
