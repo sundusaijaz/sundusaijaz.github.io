@@ -259,7 +259,11 @@
     .modal-close:hover { color: var(--text); border-color: var(--border-hover); }
     .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; padding-right: 36px; }
     .modal-title { font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 14px; padding-right: 36px; }
-    .modal-body-text { font-size: 14px; color: var(--text-2); line-height: 1.8; margin-bottom: 20px; }
+    .modal-body-text { font-size: 14px; color: var(--text-2); line-height: 1.8; margin-bottom: 16px; }
+    .modal-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
+    .modal-bullets li { font-size: 13px; color: var(--text-2); line-height: 1.65; padding-left: 16px; position: relative; }
+    .modal-bullets li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--purple); }
+    .modal-bullets li strong { color: var(--text); font-weight: 500; }
     .modal-link {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: 8px;
@@ -703,6 +707,7 @@
     <div class="modal-tags" id="modalTags"></div>
     <h3 class="modal-title" id="modalTitle"></h3>
     <p class="modal-body-text" id="modalBody"></p>
+    <ul class="modal-bullets" id="modalBullets" style="display:none"></ul>
     <div class="modal-gallery" id="modalGallery" style="display:none"></div>
     <a class="modal-link" id="modalLink" target="_blank" style="display:none">
       <i class="fas fa-arrow-up-right-from-square"></i> <span id="modalLinkLabel"></span>
@@ -917,7 +922,14 @@
     'llm-suite': {
       title: 'LLM Engineering Suite',
       tags: [['LLM',''], ['LangChain','teal'], ['OpenAI','amber']],
-      body: "A collection of five practical LLM-powered applications built to explore the full spectrum of generative AI engineering, from prompt design to agentic workflows and deployment. MinutesOfMeeting transcribes and summarises meeting recordings into structured action items. SyntheticDataGenerator uses LLMs to create labelled training data for downstream ML tasks where real data is scarce. SalesBrochure auto-generates marketing copy from company websites by scraping and summarising content with prompt chaining. CafeAssistant is a conversational agent that handles orders and FAQs using LangChain tool-calling. TextSummarization condenses long documents into concise summaries using extractive and abstractive techniques. Each app was built and documented as a standalone Jupyter notebook with a Gradio interface for interactive demos, sharing a common pattern of combining the OpenAI API with LangChain for structured, multi-step workflows.",
+      body: "A collection of five practical LLM-powered applications built to explore the full spectrum of generative AI engineering, from prompt design to agentic workflows and deployment. Each app was built and documented as a standalone Jupyter notebook with a Gradio interface for interactive demos, sharing a common pattern of combining the OpenAI API with LangChain for structured, multi-step workflows.",
+      bullets: [
+        "<strong>MinutesOfMeeting</strong> &mdash; transcribes and summarises meeting recordings into structured action items.",
+        "<strong>SyntheticDataGenerator</strong> &mdash; uses LLMs to create labelled training data for downstream ML tasks where real data is scarce.",
+        "<strong>SalesBrochure</strong> &mdash; auto-generates marketing copy from company websites by scraping and summarising content with prompt chaining.",
+        "<strong>CafeAssistant</strong> &mdash; a conversational agent that handles orders and FAQs using LangChain tool-calling.",
+        "<strong>TextSummarization</strong> &mdash; condenses long documents into concise summaries using extractive and abstractive techniques."
+      ],
       link: 'https://github.com/sundusaijaz/LLM_Engineering', linkLabel: 'View on GitHub'
     },
     'face-tracking': {
@@ -960,6 +972,13 @@
     if (!p) return;
     document.getElementById('modalTitle').textContent = p.title;
     document.getElementById('modalBody').textContent = p.body;
+    const bulletsEl = document.getElementById('modalBullets');
+    if (p.bullets && p.bullets.length) {
+      bulletsEl.innerHTML = p.bullets.map(b => `<li>${b}</li>`).join('');
+      bulletsEl.style.display = 'flex';
+    } else {
+      bulletsEl.style.display = 'none';
+    }
     document.getElementById('modalTags').innerHTML = p.tags.map(([label, cls]) =>
       `<span class="project-tag ${cls}">${label}</span>`
     ).join('');
