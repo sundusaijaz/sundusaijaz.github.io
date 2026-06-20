@@ -266,6 +266,18 @@
       background: var(--purple); color: #fff; transition: opacity 0.2s;
     }
     .modal-link:hover { opacity: 0.88; }
+    .modal-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+    .modal-gallery img {
+      width: 100%; height: 90px; object-fit: cover; border-radius: 8px;
+      border: 0.5px solid var(--border); cursor: pointer; transition: transform 0.2s, border-color 0.2s;
+    }
+    .modal-gallery img:hover { transform: scale(1.04); border-color: var(--border-hover); }
+    .lightbox-overlay {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.88); align-items: center; justify-content: center; padding: 24px;
+    }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img { max-width: 90vw; max-height: 85vh; border-radius: 8px; }
 
     /* EDUCATION */
     .edu-grid { display: flex; flex-direction: column; gap: 16px; }
@@ -691,10 +703,16 @@
     <div class="modal-tags" id="modalTags"></div>
     <h3 class="modal-title" id="modalTitle"></h3>
     <p class="modal-body-text" id="modalBody"></p>
+    <div class="modal-gallery" id="modalGallery" style="display:none"></div>
     <a class="modal-link" id="modalLink" target="_blank" style="display:none">
       <i class="fas fa-arrow-up-right-from-square"></i> <span id="modalLinkLabel"></span>
     </a>
   </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="" />
 </div>
 
 <!-- EDUCATION -->
@@ -912,7 +930,8 @@
       title: 'Cow Emotion & Posture Analysis',
       tags: [['Computer Vision',''], ['DeepLabCut · RNN','teal']],
       body: "Developed a two-stage computer vision system to automatically assess cattle wellbeing from images, motivated by the difficulty of manually monitoring large herds for signs of distress. The first stage used DeepLabCut, a pose-estimation library built on a ResNet backbone, to locate 16 anatomically meaningful keypoints on each cow (ears, legs, spine, tail position). These coordinate sequences were then fed into a recurrent neural network trained to classify the animal's emotional state as happy or unhappy based on posture patterns learned from labelled examples. The project demonstrated how pose-estimation techniques originally built for human movement analysis can be adapted to livestock welfare monitoring, with a clear path to scaling from static images to continuous video analysis on farms.",
-      link: 'https://github.com/sundusaijaz/Cow-Emotions-and-Posture-Analysis-', linkLabel: 'View on GitHub'
+      link: 'https://github.com/sundusaijaz/Cow-Emotions-and-Posture-Analysis-', linkLabel: 'View on GitHub',
+      gallery: ['images/cow-1.jpeg', 'images/cow-2.jpeg', 'images/cow-3.jpeg']
     },
     'traffic-analysis': {
       title: 'Real-time Traffic Analysis System',
@@ -924,13 +943,15 @@
       title: 'Osteoporosis Detection from X-rays',
       tags: [['Medical AI',''], ['CNN','teal']],
       body: "Built a convolutional neural network to screen for early-stage osteoporosis directly from knee X-ray images, aiming to support radiologists with a fast, automated pre-screening layer ahead of formal diagnosis. The CNN was trained on labelled X-ray datasets to recognise subtle bone density and texture patterns associated with bone loss that can be difficult to catch consistently with the naked eye, especially in high-volume clinical settings. The model outputs a classification alongside a confidence score, intended to help prioritise cases for radiologist review rather than replace clinical judgment. The project highlighted the potential for lightweight CNN-based screening tools to reduce diagnostic turnaround time in resource-constrained healthcare settings.",
-      link: 'https://github.com/sundusaijaz/Osteoporosis-Detection', linkLabel: 'View on GitHub'
+      link: 'https://github.com/sundusaijaz/Osteoporosis-Detection', linkLabel: 'View on GitHub',
+      gallery: ['images/osteo-output-1.png', 'images/osteo-output-2.png']
     },
     'spyeye': {
       title: 'Spyeye: Intelligent Surveillance System',
       tags: [['Computer Vision',''], ['YOLOv3 · dlib','amber']],
       body: "Final year capstone project building a complete automated security surveillance system that combines three independent detection capabilities into one pipeline. YOLOv3 was trained and used in two separate roles: weapon detection (identifying knives and guns in frame) and activity recognition (detecting physical altercations and fights from motion and pose cues). In parallel, a dlib-based face recognition module identified known individuals against an enrolled database, distinguishing residents and staff from unrecognised visitors. All three detection streams ran against live video feeds and were designed to trigger real-time alerts when a weapon, fight, or unrecognised intruder was detected, giving home and business owners an automated first line of threat detection without constant human monitoring of camera feeds.",
-      link: 'https://github.com/sundusaijaz/Final-Year-Project', linkLabel: 'View on GitHub'
+      link: 'https://github.com/sundusaijaz/Final-Year-Project', linkLabel: 'View on GitHub',
+      gallery: ['images/spyeye-gun.jpg']
     }
   };
 
@@ -950,6 +971,13 @@
     } else {
       linkEl.style.display = 'none';
     }
+    const galleryEl = document.getElementById('modalGallery');
+    if (p.gallery && p.gallery.length) {
+      galleryEl.innerHTML = p.gallery.map(src => `<img src="${src}" alt="${p.title} screenshot" onclick="openLightbox(event,'${src}')" />`).join('');
+      galleryEl.style.display = 'grid';
+    } else {
+      galleryEl.style.display = 'none';
+    }
     document.getElementById('projectModalOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -957,7 +985,15 @@
     document.getElementById('projectModalOverlay').classList.remove('open');
     document.body.style.overflow = '';
   }
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeProjectModal(); });
+  function openLightbox(e, src) {
+    e.stopPropagation();
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxOverlay').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightboxOverlay').classList.remove('open');
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeLightbox(); closeProjectModal(); } });
 
   // SCROLL REVEAL
   const revealEls = document.querySelectorAll('.reveal');
